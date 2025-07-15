@@ -417,12 +417,12 @@ export const addressDummyData = [
   {
     "_id": "67a1e4233f34a77b6dde9055",
     "userId": "user_2sZFHS1UIIysJyDVzCpQhUhTIhw",
-    "fullName": "GreatStack",
-    "phoneNumber": "0123456789",
-    "pincode": 654321,
-    "area": "Main Road , 123 Street, G Block",
-    "city": "City",
-    "state": "State",
+    "fullName": "Subhendu Mandal",
+    "phoneNumber": "98XXXXXX92",
+    "pincode": 722133,
+    "area": "Jambedia , Kapista , Gangajalghati",
+    "city": "Bankura",
+    "state": "West Bengal",
     "__v": 0
   }
 ]
