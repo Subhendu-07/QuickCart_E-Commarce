@@ -6,22 +6,51 @@ import { useAppContext } from "@/context/AppContext";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Loading from "@/components/Loading";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const MyOrders = () => {
 
-    const { currency } = useAppContext();
+    const { currency, getToken, user } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchOrders = async () => {
-        setOrders(orderDummyData)
-        setLoading(false);
-    }
+        try {
+            setLoading(true);
+
+            const token = await getToken();
+            if (!token) {
+                toast.error("User token missing. Please log in again.");
+                setLoading(false);
+                return;
+            }
+
+            const response = await axios.get("/api/order/list", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.data.success) {
+                setOrders(response.data.orders.reverse());
+            } else {
+                toast.error(response.data.message || "Failed to fetch orders.");
+            }
+        } catch (error) {
+            console.error("Fetch Orders Error:", error);
+            toast.error(error.response?.data?.message || error.message || "Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        fetchOrders();
-    }, []);
+        if (user) {
+            fetchOrders();
+        }
+    }, [user]);
 
     return (
         <>
